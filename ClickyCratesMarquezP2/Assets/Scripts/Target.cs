@@ -9,15 +9,15 @@ public class Target : MonoBehaviour
     private float maxSpeed = 16;
     private float maxTorque = 10;
     private float xRange = 4;
-    private float ySpawnPos = -6;
+    private float ySpawnPos = -2;
 
     // Start is called before the first frame update
     void Start()
     {
         targetRb = GetComponent<Rigidbody>();
 
-        targetRb.AddForce(Vector3.up * Random.Range(12, 16), ForceMode.Impulse);
-        targetRb.AddTorque(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), ForceMode.Impulse);
+        targetRb.AddForce(RandomForce(), ForceMode.Impulse);
+        targetRb.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
 
         transform.position = new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
     }
@@ -26,6 +26,16 @@ public class Target : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void OnMouseDown()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Destroy(gameObject);
     }
 
     Vector3 RandomForce()
@@ -39,6 +49,7 @@ public class Target : MonoBehaviour
     }
 
     Vector3 RandomSpawnPos()
-
-
+    {
+        return new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
+    }
 }
